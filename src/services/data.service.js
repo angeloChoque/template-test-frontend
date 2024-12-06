@@ -20,14 +20,14 @@ export async function getData() {
   try {
     const result = await Promise.all([
       fetchData(DEPARTMENTS_PATH),
-      fetchData(DISTRICTS_PATH),
       fetchData(PROVINCES_PATH),
+      fetchData(DISTRICTS_PATH),
       fetchData(SCHOOLS_PATH),
     ]);
     return {
       departments: dataToLayer(result[0], 0, DEPARTMENT_FEATURE_KEY),
-      districts: dataToLayer(result[1], 1, PROVINCE_FEATURE_KEY),
-      provinces: dataToLayer(result[2], 2, DISTRICT_FEATURE_KEY),
+      provinces: dataToLayer(result[1], 2, PROVINCE_FEATURE_KEY),
+      districts: dataToLayer(result[2], 1, DISTRICT_FEATURE_KEY),
       schools: dataToLayer(result[3], 3, COLLEGE_FEATURE_KEY),
     };
   } catch (err) {
@@ -52,6 +52,15 @@ function dataToLayer(data, counter, name) {
       source: clusterSource,
       style: (feature) => clusterStyle(feature),
     });
+  } else if (name == "DEPARTAMEN") {
+    return new Layer({
+      source: new Vector({
+        features: new GeoJSON({
+          featureProjection: "EPSG:3857",
+        }).readFeatures(data),
+      }),
+      style: (feature) => polygonStyle(feature, counter, name),
+    });
   }
   return new Layer({
     source: new Vector({
@@ -60,6 +69,7 @@ function dataToLayer(data, counter, name) {
       }).readFeatures(data),
     }),
     style: (feature) => polygonStyle(feature, counter, name),
+    visible: false,
   });
 }
 

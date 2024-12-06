@@ -3,8 +3,8 @@ import { Fill, Stroke, Style, Text, Circle } from "ol/style.js";
 export function polygonStyle(feature, layerNumber, name) {
   const styleParameter = [
     {
-      color: "red",
-      width: 3,
+      color: "black",
+      width: 5,
       textColor: "black",
       textWidth: 2,
       strokeColor: "#fff",
@@ -21,7 +21,7 @@ export function polygonStyle(feature, layerNumber, name) {
       text: feature.get(name),
     },
     {
-      color: "black",
+      color: "red",
       width: 3,
       textColor: "red",
       textWidth: 2,
@@ -53,9 +53,9 @@ export function clusterStyle(feature) {
   const size = feature.get("features").length; // Número de elementos en el clúster.
   return new Style({
     image: new Circle({
-      radius: 12, // Tamaño ajustado según el número de elementos.
+      radius: 10,
       fill: new Fill({
-        color: "green", // Color del clúster.
+        color: "green", //colores
       }),
       stroke: new Stroke({
         color: "white",
@@ -63,7 +63,7 @@ export function clusterStyle(feature) {
       }),
     }),
     text: new Text({
-      text: size.toString(), // Mostrar el número de elementos.
+      text: size.toString(), // número de elementos.
       font: "14px Calibri,sans-serif",
       fill: new Fill({
         color: "white",
