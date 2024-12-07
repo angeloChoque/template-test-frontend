@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -7,25 +7,38 @@ import {
   Paper,
   InputAdornment,
   IconButton,
+  Alert,
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useNavigate } from "react-router";
+import { useAuthStore } from "../store/useAuthStore";
 
 export default function Login() {
   const [password, setPassword] = useState(false);
   const [emailInput, setEmailInput] = useState("prueba@hotmail.com");
   const [passwordInput, setPasswordInput] = useState("ContraseñaPrueba");
+  const [error, setError] = useState(false);
+  const authUser = useAuthStore((state) => state);
 
   const VALUE_EMAIL = "prueba@hotmail.com";
   const VALUE_PASSWORD = "ContraseñaPrueba";
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (authUser.isAuthenticate) {
+      navigate("/visor");
+    }
+  }, []);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (emailInput === VALUE_EMAIL && passwordInput === VALUE_PASSWORD) {
       navigate("/visor");
+      authUser.logIn();
     } else {
-      alert("Correo o contraseña incorrectos");
+      if (emailInput !== VALUE_EMAIL || passwordInput !== VALUE_PASSWORD) {
+        setError(true);
+      }
     }
   };
 
@@ -46,12 +59,17 @@ export default function Login() {
         sx={{
           padding: 4,
           width: 500,
-          height: 400,
+          height: 450,
           textAlign: "center",
           borderRadius: "15px",
         }}
       >
-        <Typography fontFamily={"inherit"} variant="h4" sx={{ mb: 2 }}>
+        <Typography
+          fontFamily={"inherit"}
+          fontWeight={"bold"}
+          variant="h4"
+          sx={{ mb: 2 }}
+        >
           Login
         </Typography>
         <Typography
@@ -60,10 +78,12 @@ export default function Login() {
           sx={{ my: 2 }}
           align="justify"
         >
-          Please put your account.
+          Please place your account.
         </Typography>
         <form onSubmit={handleSubmit}>
           <TextField
+            helperText={error ? "Email incorrect" : ""}
+            error={error}
             label="Email"
             type="email"
             fullWidth
@@ -74,6 +94,8 @@ export default function Login() {
           />
           <TextField
             label="Password"
+            helperText={error ? "Password incorrect" : ""}
+            error={error}
             type={password ? "Text" : "Password"}
             value={passwordInput}
             fullWidth
@@ -96,6 +118,9 @@ export default function Login() {
               },
             }}
           />
+          <Alert severity="info">
+            Credentials: prueba@hotmail.com - ContraseñaPrueba
+          </Alert>
           <Button
             type="submit"
             variant="contained"

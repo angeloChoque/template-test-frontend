@@ -5,13 +5,29 @@ import OSM from "ol/source/OSM";
 import { getData } from "../services/data.service";
 import ModalCollege from "../components/ModalCollege";
 import Loader from "../components/Loader";
+import { useAuthStore } from "../store/useAuthStore";
+import { useNavigate } from "react-router";
+import { IconButton } from "@mui/material";
+import LogoutIcon from "@mui/icons-material/Logout";
+import LogOutButton from "../components/LogOutButton";
 
 export default function Map() {
   const [open, setOpen] = useState(false);
   const [schoolData, setSchoolData] = useState(null);
   const [loaderMap, setLoaderMap] = useState(true);
 
+  const authUser = useAuthStore((state) => state);
+  const navigate = useNavigate();
+
+  const handleLogOut = () => {
+    authUser.logOut();
+    navigate("/");
+  };
+
   useEffect(() => {
+    if (authUser.isAuthenticate == false) {
+      navigate("/");
+    }
     const map = new OLMap({
       target: "map",
       layers: [
@@ -100,6 +116,7 @@ export default function Map() {
   return (
     <div>
       {loaderMap && <Loader />}
+      <LogOutButton logOut={handleLogOut} />
       <div id="map"></div>
       <ModalCollege open={open} setOpen={setOpen} schoolData={schoolData} />
     </div>

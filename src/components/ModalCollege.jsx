@@ -15,11 +15,11 @@ export default function ModalCollege({ open, setOpen, schoolData }) {
           top: "50%",
           left: "50%",
           transform: "translate(-50%, -50%)",
-          p: 2,
           maxWidth: 400,
           width: "100%",
           backgroundColor: "white",
           boxShadow: 15,
+          borderRadius: "8px",
         }}
       >
         <Box
@@ -27,6 +27,7 @@ export default function ModalCollege({ open, setOpen, schoolData }) {
             width: "100%",
             maxHeight: 400,
             overflowY: "scroll",
+            p: 3,
           }}
         >
           {schoolData && schoolData.length > 0 ? (
