@@ -1,8 +1,8 @@
-# Prueba Técnica Mapa de colegios en Cuzco
+# Prueba Técnica Mapa de Colegios en Cuzco
 
 Este proyecto consiste en un mapa interactivo que permite ubicar colegios en la región de Cusco, facilitando el acceso a la información sobre instituciones educativas en dicha zona. El objetivo principal es proporcionar una herramienta visual para que los usuarios puedan localizarlos, explorar sus detalles y conocer su distribución geográfica en la región.
 
-## Características principales:
+## Características Principales:
 - Mapa interactivo que muestra departamentos, distritos , provincias y colegios en la región de Cusco .
 - Funcionalidad de zoom para explorar diferentes niveles de detalle.
 - Información detallada sobre cada colegio, como nombre, ubicación y otros datos relevantes.
