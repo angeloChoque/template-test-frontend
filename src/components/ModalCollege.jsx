@@ -22,20 +22,25 @@ export default function ModalCollege({ open, setOpen, schoolData }) {
           boxShadow: 15,
         }}
       >
-        <Box sx={{ width: "100%" }}>
-          {schoolData && schoolData.length > 0 && (
-            <Typography
-              id="modal-modal-title"
-              variant="h5"
-              component="h2"
-              fontWeight={"bold"}
-            >
-              {schoolData[0].nombre}
-            </Typography>
-          )}
+        <Box
+          sx={{
+            width: "100%",
+            maxHeight: 400,
+            overflowY: "scroll",
+          }}
+        >
           {schoolData && schoolData.length > 0 ? (
             schoolData.map((colegio, i) => (
               <div key={`${colegio.codigoModular}-${i}`}>
+                <Typography
+                  id="modal-modal-title"
+                  variant="h5"
+                  component="h2"
+                  fontWeight={"bold"}
+                  sx={{ my: 1 }}
+                >
+                  {schoolData[0].nombre}
+                </Typography>
                 <Typography variant="body1">
                   <strong>Código Modular:</strong>
                   {colegio.codigoModular}

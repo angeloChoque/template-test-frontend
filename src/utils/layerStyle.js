@@ -4,7 +4,7 @@ export function polygonStyle(feature, layerNumber, name) {
   const styleParameter = [
     {
       color: "black",
-      width: 5,
+      width: 4,
       textColor: "black",
       textWidth: 2,
       strokeColor: "#fff",
@@ -13,7 +13,7 @@ export function polygonStyle(feature, layerNumber, name) {
     },
     {
       color: "blue",
-      width: 3,
+      width: 4,
       textColor: "blue",
       textWidth: 2,
       strokeColor: "#fff",
@@ -55,7 +55,7 @@ export function clusterStyle(feature) {
     image: new Circle({
       radius: 10,
       fill: new Fill({
-        color: "green", //colores
+        color: "green",
       }),
       stroke: new Stroke({
         color: "white",

@@ -4,10 +4,12 @@ import TileLayer from "ol/layer/Tile";
 import OSM from "ol/source/OSM";
 import { getData } from "../services/data.service";
 import ModalCollege from "../components/ModalCollege";
+import Loader from "../components/Loader";
 
 export default function Map() {
   const [open, setOpen] = useState(false);
   const [schoolData, setSchoolData] = useState(null);
+  const [loaderMap, setLoaderMap] = useState(true);
 
   useEffect(() => {
     const map = new OLMap({
@@ -26,12 +28,13 @@ export default function Map() {
     });
 
     getData().then((data) => {
-      if (data !== null) {
-        map.addLayer(data.departments);
-        map.addLayer(data.districts);
-        map.addLayer(data.provinces);
-        map.addLayer(data.schools);
+      if (data == null) {
+        return;
       }
+      map.addLayer(data.departments);
+      map.addLayer(data.districts);
+      map.addLayer(data.provinces);
+      map.addLayer(data.schools);
 
       map.getView().on("change:resolution", () => {
         const zoom = map.getView().getZoom();
@@ -86,6 +89,7 @@ export default function Map() {
           }
         }
       });
+      setLoaderMap(false);
     });
 
     return () => {
@@ -95,6 +99,7 @@ export default function Map() {
 
   return (
     <div>
+      {loaderMap && <Loader />}
       <div id="map"></div>
       <ModalCollege open={open} setOpen={setOpen} schoolData={schoolData} />
     </div>
